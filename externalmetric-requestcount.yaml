@@ -1,0 +1,21 @@
+apiVersion: metrics.aws/v1alpha1
+kind: ExternalMetric
+metadata:
+  name: request-count
+spec:
+  name: request-count
+  resource:
+    resource: "deployment"
+  queries:
+    - id: elb_service
+      metricStat:
+        metric:
+          namespace: "AWS/ELB"
+          metricName: "RequestCount"
+          dimensions:
+            - name: Service
+              value: "ELB"
+        period: 300
+        stat: Sum
+        unit: Count
+      returnData: true
